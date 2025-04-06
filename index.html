@@ -1,11 +1,446 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ClearGive | Trust-Based Fund Release</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --primary: #4361ee;
+      --secondary: #3a0ca3;
+      --accent: #f72585;
+      --light: #f8f9fa;
+      --dark: #212529;
+      --success: #4cc9f0;
+      --warning: #ffd166;
+      --danger: #ef476f;
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+    
+    body {
+      background-color: #f5f7ff;
+      color: var(--dark);
+      line-height: 1.6;
+    }
+    
+    /* Header */
+    header {
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      color: white;
+      padding: 1rem 0;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+    
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+    
+    /* Trust Level Badges */
+    .trust-badge {
+      display: inline-block;
+      padding: 0.25rem 0.75rem;
+      border-radius: 50px;
+      font-size: 0.85rem;
+      font-weight: 600;
+    }
+    
+    .trust-1 { background: var(--danger); color: white; }
+    .trust-2 { background: var(--warning); color: var(--dark); }
+    .trust-3 { background: var(--success); color: white; }
+    
+    /* Request Cards */
+    .request-card {
+      background: white;
+      border-radius: 12px;
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+      border-left: 4px solid var(--primary);
+    }
+    
+    .request-header {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 1rem;
+    }
+    
+    .request-images {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+      gap: 1rem;
+      margin: 1rem 0;
+    }
+    
+    .request-image {
+      height: 120px;
+      border-radius: 6px;
+      overflow: hidden;
+    }
+    
+    .request-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    
+    .request-details {
+      margin: 1rem 0;
+    }
+    
+    .request-details div {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 0.5rem;
+    }
+    
+    /* Approval Process */
+    .approval-process {
+      background: #f8f9fa;
+      border-radius: 8px;
+      padding: 1rem;
+      margin-top: 1rem;
+    }
+    
+    .approval-steps {
+      display: flex;
+      justify-content: space-between;
+      margin: 1rem 0;
+      position: relative;
+    }
+    
+    .approval-step {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      background: #e9ecef;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 2;
+    }
+    
+    .approval-step.active {
+      background: var(--primary);
+      color: white;
+    }
+    
+    .approval-step.completed {
+      background: var(--success);
+      color: white;
+    }
+    
+    .approval-line {
+      position: absolute;
+      top: 50%;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: #e9ecef;
+      z-index: 1;
+    }
+    
+    .approval-line-progress {
+      height: 100%;
+      background: var(--success);
+    }
+    
+    /* Buttons */
+    .btn {
+      display: inline-block;
+      padding: 0.75rem 1.5rem;
+      border: none;
+      border-radius: 6px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+    
+    .btn-primary {
+      background: var(--primary);
+      color: white;
+    }
+    
+    .btn-outline {
+      background: transparent;
+      border: 1px solid var(--primary);
+      color: var(--primary);
+    }
+    
+    .btn-block {
+      display: block;
+      width: 100%;
+      text-align: center;
+    }
+    
+    /* Responsive */
+    @media (max-width: 768px) {
+      .request-header {
+        flex-direction: column;
+      }
+      
+      .request-images {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
 </head>
 <body>
-    <p>Hi am trying something. </p>
+  <header>
+    <div class="container">
+      <h1 style="color: white; padding: 1rem 0;">ClearGive</h1>
+    </div>
+  </header>
+  
+  <div class="container">
+    <h2 style="margin: 2rem 0 1rem;">Fund Release Requests</h2>
+    <p style="margin-bottom: 2rem;">NGOs request funds for specific needs. Your approval releases money based on their trust level.</p>
+    
+    <!-- High Trust NGO Request -->
+    <div class="request-card">
+      <div class="request-header">
+        <div>
+          <h3>Medical Supplies for Clinic</h3>
+          <p style="color: #6c757d;">Requested by: <strong>Health for All</strong> <span class="trust-badge trust-3">High Trust</span></p>
+        </div>
+        <div style="text-align: right;">
+          <p style="font-size: 1.5rem; font-weight: bold; color: var(--primary);">$2,500</p>
+          <p style="color: #6c757d; font-size: 0.9rem;">Requested on: Oct 12, 2023</p>
+        </div>
+      </div>
+      
+      <div class="request-images">
+        <div class="request-image">
+          <img src="https://images.unsplash.com/photo-1579684385127-1ef15d508118?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" alt="Medical Supplies">
+        </div>
+        <div class="request-image">
+          <img src="https://images.unsplash.com/photo-1505751172876-fa1923c5c528?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" alt="Clinic">
+        </div>
+        <div class="request-image">
+          <img src="https://images.unsplash.com/photo-1588776814546-1ffcf47267a5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" alt="Quote">
+        </div>
+      </div>
+      
+      <div class="request-details">
+        <div>
+          <span>Items Requested:</span>
+          <span>Antibiotics, Bandages, PPE</span>
+        </div>
+        <div>
+          <span>Vendor:</span>
+          <span>MedSupply Co. (Verified)</span>
+        </div>
+        <div>
+          <span>Beneficiaries:</span>
+          <span>Rural clinic serving 5,000 patients</span>
+        </div>
+      </div>
+      
+      <div class="approval-process">
+        <h4>Approval Process</h4>
+        <p>This NGO has <strong>High Trust</strong> rating. Funds will be released after:</p>
+        
+        <div class="approval-steps">
+          <div class="approval-step completed">
+            <i class="fas fa-check"></i>
+          </div>
+          <div class="approval-step active">
+            2
+          </div>
+          <div class="approval-step">
+            3
+          </div>
+          <div class="approval-line">
+            <div class="approval-line-progress" style="width: 33%"></div>
+          </div>
+        </div>
+        
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 1rem;">
+          <button class="btn btn-outline">
+            <i class="fas fa-question-circle"></i> Request Details
+          </button>
+          <button class="btn btn-primary">
+            <i class="fas fa-check"></i> Approve Release
+          </button>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Medium Trust NGO Request -->
+    <div class="request-card">
+      <div class="request-header">
+        <div>
+          <h3>School Renovation Materials</h3>
+          <p style="color: #6c757d;">Requested by: <strong>Education First</strong> <span class="trust-badge trust-2">Medium Trust</span></p>
+        </div>
+        <div style="text-align: right;">
+          <p style="font-size: 1.5rem; font-weight: bold; color: var(--primary);">$5,200</p>
+          <p style="color: #6c757d; font-size: 0.9rem;">Requested on: Oct 10, 2023</p>
+        </div>
+      </div>
+      
+      <div class="request-images">
+        <div class="request-image">
+          <img src="https://images.unsplash.com/photo-1523050854058-8df90110c9f1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" alt="School">
+        </div>
+        <div class="request-image">
+          <img src="https://images.unsplash.com/photo-1546410531-bb4caa6b424d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2071&q=80" alt="Materials">
+        </div>
+      </div>
+      
+      <div class="approval-process">
+        <h4>Approval Process</h4>
+        <p>This NGO has <strong>Medium Trust</strong> rating. Funds will be released after:</p>
+        
+        <div class="approval-steps">
+          <div class="approval-step completed">
+            <i class="fas fa-check"></i>
+          </div>
+          <div class="approval-step completed">
+            <i class="fas fa-check"></i>
+          </div>
+          <div class="approval-step active">
+            3
+          </div>
+          <div class="approval-line">
+            <div class="approval-line-progress" style="width: 66%"></div>
+          </div>
+        </div>
+        
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 1rem;">
+          <button class="btn btn-outline">
+            <i class="fas fa-file-invoice"></i> View Invoice
+          </button>
+          <button class="btn btn-primary">
+            <i class="fas fa-check"></i> Approve Release
+          </button>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Low Trust NGO Request -->
+    <div class="request-card">
+      <div class="request-header">
+        <div>
+          <h3>Food Packages for Refugees</h3>
+          <p style="color: #6c757d;">Requested by: <strong>New Hope Aid</strong> <span class="trust-badge trust-1">Low Trust</span></p>
+        </div>
+        <div style="text-align: right;">
+          <p style="font-size: 1.5rem; font-weight: bold; color: var(--primary);">$3,800</p>
+          <p style="color: #6c757d; font-size: 0.9rem;">Requested on: Oct 8, 2023</p>
+        </div>
+      </div>
+      
+      <div class="approval-process">
+        <h4>Approval Process</h4>
+        <p>This NGO has <strong>Low Trust</strong> rating. Funds will be released after:</p>
+        
+        <div class="approval-steps">
+          <div class="approval-step completed">
+            <i class="fas fa-check"></i>
+          </div>
+          <div class="approval-step completed">
+            <i class="fas fa-check"></i>
+          </div>
+          <div class="approval-step completed">
+            <i class="fas fa-check"></i>
+          </div>
+          <div class="approval-step active">
+            4
+          </div>
+          <div class="approval-line">
+            <div class="approval-line-progress" style="width: 75%"></div>
+          </div>
+        </div>
+        
+        <p style="margin: 1rem 0; font-size: 0.9rem;">
+          <i class="fas fa-info-circle" style="color: var(--primary);"></i> 
+          This request requires additional verification due to the NGO's trust level.
+        </p>
+        
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+          <button class="btn btn-outline">
+            <i class="fas fa-user-shield"></i> Verify Beneficiaries
+          </button>
+          <button class="btn btn-primary">
+            <i class="fas fa-check"></i> Approve Release
+          </button>
+        </div>
+      </div>
+    </div>
+    
+    <!-- System Explanation -->
+    <div style="background: #f8f9fa; border-radius: 12px; padding: 2rem; margin: 3rem 0;">
+      <h2 style="margin-bottom: 1rem;">How Trust Levels Affect Fund Release</h2>
+      
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; margin-top: 1.5rem;">
+        <div>
+          <h3><span class="trust-badge trust-3" style="margin-right: 0.5rem;"></span> High Trust</h3>
+          <ul style="margin-top: 0.5rem;">
+            <li>3 approval steps</li>
+            <li>Basic documentation required</li>
+            <li>Fast-track review (48 hrs)</li>
+          </ul>
+        </div>
+        
+        <div>
+          <h3><span class="trust-badge trust-2" style="margin-right: 0.5rem;"></span> Medium Trust</h3>
+          <ul style="margin-top: 0.5rem;">
+            <li>4 approval steps</li>
+            <li>Detailed invoices required</li>
+            <li>Standard review (5 days)</li>
+          </ul>
+        </div>
+        
+        <div>
+          <h3><span class="trust-badge trust-1" style="margin-right: 0.5rem;"></span> Low Trust</h3>
+          <ul style="margin-top: 0.5rem;">
+            <li>5 approval steps</li>
+            <li>On-ground verification</li>
+            <li>Extended review (10+ days)</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <script>
+    // Approval button functionality
+    document.querySelectorAll('.btn-primary').forEach(btn => {
+      btn.addEventListener('click', function() {
+        const card = this.closest('.request-card');
+        const currentStep = card.querySelector('.approval-step.active');
+        const nextStep = currentStep.nextElementSibling;
+        const progressLine = card.querySelector('.approval-line-progress');
+        
+        if (nextStep && nextStep.classList.contains('approval-step')) {
+          currentStep.classList.remove('active');
+          currentStep.classList.add('completed');
+          currentStep.innerHTML = '<i class="fas fa-check"></i>';
+          nextStep.classList.add('active');
+          
+          // Update progress line
+          const steps = card.querySelectorAll('.approval-step');
+          const completedSteps = card.querySelectorAll('.approval-step.completed').length;
+          progressLine.style.width = ${(completedSteps / (steps.length - 1)) * 100}%;
+          
+          // If last step
+          if (!nextStep.nextElementSibling || !nextStep.nextElementSibling.classList.contains('approval-step')) {
+            this.innerHTML = '<i class="fas fa-check-double"></i> Funds Released';
+            this.disabled = true;
+            card.style.borderLeftColor = 'var(--success)';
+          }
+        }
+      });
+    });
+  </script>
 </body>
 </html>
